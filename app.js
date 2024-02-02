@@ -289,7 +289,17 @@ function randomWords(diff) {
     "versioncontrol", "virtualization", "visualization", "volatile", "vulnerability", "waterfall", "webassembly", "webhook", "whitelist", 
     "workflow", "xss", "yaml", "zero-day", "zip"];
 
-    var beginnerWords = ["api", "array", "boolean", "class", "code", "compile", "debug", "execute", "file", "function", "html", "ide", "inheritance", "integer", "java", "json", "loop", "method", "object", "operator", "parameter", "pointer", "program", "python", "query", "recursion", "script", "server", "sql", "string", "syntax", "variable", "web", "agile", "authentication", "backend", "frontend", "bot", "canvas", "captcha", "compiler", "configuration", "container", "css", "database", "dns", "docker", "fetch", "firewall", "git", "hashing", "http", "immutable", "indexing", "instance", "interface", "jwt", "lambda", "loadbalancer", "middleware", "mocking", "namespace", "oauth", "pagination", "parsing", "phishing", "queue", "react", "refactoring", "rpc", "scalability", "session", "socket", "stack", "streaming", "tcp", "token", "unit", "url", "validation", "vpn", "webassembly", "xhr", "xml", "yaml"];
+    var beginnerWords = ["array", "class", "stack", "queue", "float", "input", "const", "while", "break", "print",
+    "false", "true", "null", "void", "char", "byte", "data", "else", "event", "final",
+    "goto", "short", "throw", "super", "table", "throws", "catch", "close", "clone", "check",
+    "force", "group", "index", "found", "frame", "parse", "pivot", "round", "scope",
+    "slice", "solid", "tried", "truly", "arise", "audio", "basic", "boost", "chief", "count",
+    "crawl", "demon", "drift", "enjoy", "field", "fiber", "front", "graph", "haste", "intro",
+    "jumbo", "known", "label", "limit", "match", "noise", "option", "panel", "pitch", "quiet",
+    "raise", "reset", "setup", "shine", "since", "sweep", "trace", "track", "unity", "valid",
+    "vivid", "voice", "where", "yield", "zero", "allow", "begin", "color", "debug", "exact",
+    "fetch", "gamma", "house", "mango", "novel", "occur", "pixel", "query", "scale", "zoom",
+    "amaze", "bison", "blend", "cloud", "cycle", "enter", "fault", "grand",];
 
   const wordArray = diff === 1 ? beginnerWords : advancedWords;
   shuffle(wordArray);

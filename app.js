@@ -108,7 +108,7 @@ function displayScore() {
   timeElement.innerText = accuracyPercentage + "%";
   timeNameElement.innerText = "PA";
 
-  cwElement.innerText = Math.floor((timerInterval * wordsCorrectCount) * 2.8);
+  cwElement.innerText = (timerInterval * wordsCorrectCount) * 3;
   cwNameElement.innerText = "WPM";
 }
 

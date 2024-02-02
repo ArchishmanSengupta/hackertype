@@ -16,7 +16,7 @@ const hardButton = document.getElementById("hard");
 let currentWordNo = 1;
 let wordsSubmittedCount = 0;
 let wordsCorrectCount = 0;
-let countdownTimer = 30;
+let countdownTimer = 15;
 let timerFlag = 0;
 let timerInterval;
 let difficultyLevel = 1;
@@ -26,7 +26,7 @@ displayTest(difficultyLevel);
 
 // Event listeners
 inputElement.addEventListener('input', handleInput);
-fifteenButton.addEventListener("click", () => setTimer(15, 4, fifteenButton, thirtyButton, sixtyButton))
+fifteenButton.addEventListener("click", () => setTimer(15, 3, fifteenButton, thirtyButton, sixtyButton))
 thirtyButton.addEventListener("click", () => setTimer(30, 2, thirtyButton, sixtyButton, fifteenButton));
 sixtyButton.addEventListener("click", () => setTimer(60, 1, sixtyButton, thirtyButton, fifteenButton));
 easyButton.addEventListener("click", () => setDifficulty(1, easyButton, hardButton));
@@ -160,10 +160,10 @@ function displayScore() {
 
   timeElement.innerText = accuracyPercentage + "%";
   timeNameElement.innerText = "PA";
-  
-  // Calculate WPM based on countdownTimer
-  const wpmMultiplier = countdownTimer === 15 ? 4 : (countdownTimer === 30 ? 2 : 1);
-  cwElement.innerText = wordsCorrectCount * wpmMultiplier;
+
+  // Calculate WPM based on wordsCorrectCount and countdownTimer
+  const wpm = Math.round((wordsCorrectCount / countdownTimer) * 60);
+  cwElement.innerText = wpm;
   cwNameElement.innerText = "WPM";
 }
 
@@ -267,7 +267,7 @@ function shuffle(array) {
  * @returns {Array} - Array of randomly selected words
  */
 function randomWords(diff) {
-  var advancedWords = [
+  var hardWords = [
     "abstraction", "accessibility", "accumulator", "aggregation", "agile", "algorithm", "allocation", "ambiguity", "analytics", "android", 
     "animation", "annotation", "antivirus", "API", "applet", "architecture", "argument", "arithmetic", "artificialintelligence", "assembly", 
     "asynchronous", "authentication", "authorization", "autoencoder", "backend", "bandwidth", "basecase", "bigdata", "binder", "biometrics", 
@@ -296,7 +296,8 @@ function randomWords(diff) {
     "versioncontrol", "virtualization", "visualization", "volatile", "vulnerability", "waterfall", "webassembly", "webhook", "whitelist", 
     "workflow", "xss", "yaml", "zero-day", "zip"];
 
-    var beginnerWords = ["array", "class", "stack", "queue", "float", "input", "const", "while", "break", "print",
+    var easyWords = [
+      "array", "class", "stack", "queue", "float", "input", "const", "while", "break", "print",
     "false", "true", "null", "void", "char", "byte", "data", "else", "event", "final",
     "goto", "short", "throw", "super", "table", "throws", "catch", "close", "clone", "check",
     "force", "group", "index", "found", "frame", "parse", "pivot", "round", "scope",
@@ -306,9 +307,10 @@ function randomWords(diff) {
     "raise", "reset", "setup", "shine", "since", "sweep", "trace", "track", "unity", "valid",
     "vivid", "voice", "where", "yield", "zero", "allow", "begin", "color", "debug", "exact",
     "fetch", "gamma", "house", "mango", "novel", "occur", "pixel", "query", "scale", "zoom",
-    "amaze", "bison", "blend", "cloud", "cycle", "enter", "fault", "grand",];
+    "amaze", "bison", "blend", "cloud", "cycle", "enter", "fault", "grand",
+  ];
 
-  const wordArray = diff === 1 ? beginnerWords : advancedWords;
+  const wordArray = diff === 1 ? easyWords : hardWords;
   shuffle(wordArray);
 
   const selectedWords = wordArray.slice(0, 40).map(word => word + " ");

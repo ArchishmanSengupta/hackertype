@@ -6,10 +6,11 @@ const timeElement = document.getElementById("time");
 const cwNameElement = document.getElementById("cwName");
 const cwElement = document.getElementById("cw");
 const restartButtonElement = document.getElementById("restartBtn");
+const fifteenButton = document.getElementById("fifteen");
 const thirtyButton = document.getElementById("thirty");
 const sixtyButton = document.getElementById("sixty");
-const beginnerButton = document.getElementById("beg");
-const proButton = document.getElementById("pro");
+const easyButton = document.getElementById("easy");
+const hardButton = document.getElementById("hard");
 
 // Test Variables
 let currentWordNo = 1;
@@ -25,10 +26,11 @@ displayTest(difficultyLevel);
 
 // Event listeners
 inputElement.addEventListener('input', handleInput);
-thirtyButton.addEventListener("click", () => setTimer(30, 2, thirtyButton, sixtyButton));
-sixtyButton.addEventListener("click", () => setTimer(60, 1, sixtyButton, thirtyButton));
-beginnerButton.addEventListener("click", () => setDifficulty(1, beginnerButton, proButton));
-proButton.addEventListener("click", () => setDifficulty(2, proButton, beginnerButton));
+fifteenButton.addEventListener("click", () => setTimer(15, 4, fifteenButton, thirtyButton, sixtyButton))
+thirtyButton.addEventListener("click", () => setTimer(30, 2, thirtyButton, sixtyButton, fifteenButton));
+sixtyButton.addEventListener("click", () => setTimer(60, 1, sixtyButton, thirtyButton, fifteenButton));
+easyButton.addEventListener("click", () => setDifficulty(1, easyButton, hardButton));
+hardButton.addEventListener("click", () => setDifficulty(2, hardButton, easyButton));
 restartButtonElement.addEventListener("click", restartTest);
 
 /**
@@ -52,12 +54,13 @@ function handleInput(event) {
  * @param {number} newTimer - Countdown timer value
  * @param {number} newFactor - Interval factor for the timer
  * @param {HTMLElement} selectedButton - Button selected by the user
- * @param {HTMLElement} unselectedButton - Button not selected by the user
+ * @param {HTMLElement} unselectedButton1 - Button not selected by the user (1)
+ * @param {HTMLElement} unselectedButton2 - Button not selected by the user (2)
  */
-function setTimer(newTimer, newFactor, selectedButton, unselectedButton) {
+function setTimer(newTimer, newFactor, selectedButton, unselectedButton1, unselectedButton2) {
   countdownTimer = newTimer;
   timerInterval = newFactor;
-  toggleButtonColor(selectedButton, unselectedButton);
+  toggleButtonColor(selectedButton, unselectedButton1, unselectedButton2);
   timeElement.innerText = countdownTimer;
 }
 
@@ -76,11 +79,13 @@ function setDifficulty(newDifficulty, selectedButton, unselectedButton) {
 /**
  * Toggles the color of selected and unselected buttons.
  * @param {HTMLElement} selectedButton - Button selected by the user
- * @param {HTMLElement} unselectedButton - Button not selected by the user
+ * @param {HTMLElement} unselectedButton1 - Button not selected by the user (1)
+ * @param {HTMLElement} unselectedButton2 - Button not selected by the user (2)
  */
-function toggleButtonColor(selectedButton, unselectedButton) {
+function toggleButtonColor(selectedButton, unselectedButton1, unselectedButton2) {
   selectedButton.classList.add('green');
-  unselectedButton.classList.remove('green');
+  unselectedButton1.classList.remove('green');
+  unselectedButton2.classList.remove('green');
 }
 
 /**
@@ -134,14 +139,14 @@ function timeIsOver() {
  * Hides difficulty buttons.
  */
 function hideButtons() {
-  [thirtyButton, sixtyButton, beginnerButton, proButton].forEach(button => button.style.visibility = 'hidden');
+  [thirtyButton, sixtyButton, easyButton, hardButton].forEach(button => button.style.visibility = 'hidden');
 }
 
 /**
  * Shows difficulty buttons.
  */
 function showButtons() {
-  [thirtyButton, sixtyButton, beginnerButton, proButton].forEach(button => button.style.visibility = 'visible');
+  [thirtyButton, sixtyButton, easyButton, hardButton].forEach(button => button.style.visibility = 'visible');
 }
 
 /**
@@ -155,8 +160,10 @@ function displayScore() {
 
   timeElement.innerText = accuracyPercentage + "%";
   timeNameElement.innerText = "PA";
-
-  cwElement.innerText = (wordsCorrectCount) * 2;
+  
+  // Calculate WPM based on countdownTimer
+  const wpmMultiplier = countdownTimer === 15 ? 4 : (countdownTimer === 30 ? 2 : 1);
+  cwElement.innerText = wordsCorrectCount * wpmMultiplier;
   cwNameElement.innerText = "WPM";
 }
 
